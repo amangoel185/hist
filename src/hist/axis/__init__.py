@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import sys
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Iterable
 
 import boost_histogram.axis as bha
 
@@ -28,12 +30,12 @@ __all__ = (
 )
 
 
-def __dir__() -> Tuple[str, ...]:
+def __dir__() -> tuple[str, ...]:
     return __all__
 
 
 class CoreAxisProtocol(Protocol):
-    metadata: Dict[str, Any]
+    metadata: dict[str, Any]
 
 
 class AxisProtocol(Protocol):
@@ -72,11 +74,11 @@ class AxesMixin:
     def label(self: AxisProtocol, value: str) -> None:
         self._ax.metadata["label"] = value
 
-    def _repr_args_(self: AxisProtocol) -> List[str]:
+    def _repr_args_(self: AxisProtocol) -> list[str]:
         """
         Return options for use in repr.
         """
-        ret: List[str] = super()._repr_args_()  # type: ignore
+        ret: list[str] = super()._repr_args_()  # type: ignore
 
         if self.name:
             ret.append(f"name={self.name!r}")
@@ -99,12 +101,12 @@ class Regular(AxesMixin, bha.Regular, family=hist):
         label: str = "",
         metadata: Any = None,
         flow: bool = True,
-        underflow: Optional[bool] = None,
-        overflow: Optional[bool] = None,
+        underflow: bool | None = None,
+        overflow: bool | None = None,
         growth: bool = False,
         circular: bool = False,
-        transform: Optional[bha.transform.AxisTransform] = None,
-        __dict__: Optional[Dict[str, Any]] = None,
+        transform: bha.transform.AxisTransform | None = None,
+        __dict__: dict[str, Any] | None = None,
     ) -> None:
         super().__init__(
             bins,
@@ -131,7 +133,7 @@ class Boolean(AxesMixin, bha.Boolean, family=hist):
         name: str = "",
         label: str = "",
         metadata: Any = None,
-        __dict__: Optional[Dict[str, Any]] = None,
+        __dict__: dict[str, Any] | None = None,
     ) -> None:
         super().__init__(
             metadata=metadata,
@@ -151,12 +153,12 @@ class Variable(bha.Variable, AxesMixin, family=hist):
         name: str = "",
         label: str = "",
         flow: bool = True,
-        underflow: Optional[bool] = None,
-        overflow: Optional[bool] = None,
+        underflow: bool | None = None,
+        overflow: bool | None = None,
         growth: bool = False,
         circular: bool = False,
         metadata: Any = None,
-        __dict__: Optional[Dict[str, Any]] = None,
+        __dict__: dict[str, Any] | None = None,
     ) -> None:
         super().__init__(
             edges,
@@ -182,12 +184,12 @@ class Integer(bha.Integer, AxesMixin, family=hist):
         name: str = "",
         label: str = "",
         flow: bool = True,
-        underflow: Optional[bool] = None,
-        overflow: Optional[bool] = None,
+        underflow: bool | None = None,
+        overflow: bool | None = None,
         growth: bool = False,
         circular: bool = False,
         metadata: Any = None,
-        __dict__: Optional[Dict[str, Any]] = None,
+        __dict__: dict[str, Any] | None = None,
     ) -> None:
         super().__init__(
             start,
@@ -214,7 +216,7 @@ class IntCategory(bha.IntCategory, AxesMixin, family=hist):
         label: str = "",
         growth: bool = False,
         metadata: Any = None,
-        __dict__: Optional[Dict[str, Any]] = None,
+        __dict__: dict[str, Any] | None = None,
     ) -> None:
         super().__init__(
             categories,
@@ -237,7 +239,7 @@ class StrCategory(bha.StrCategory, AxesMixin, family=hist):
         label: str = "",
         growth: bool = False,
         metadata: Any = None,
-        __dict__: Optional[Dict[str, Any]] = None,
+        __dict__: dict[str, Any] | None = None,
     ) -> None:
         super().__init__(
             categories,

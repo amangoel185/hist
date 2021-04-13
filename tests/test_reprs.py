@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 def test_1D_empty_repr(named_hist):
 
     h = named_hist.new.Reg(10, -1, 1, name="x").Double()
