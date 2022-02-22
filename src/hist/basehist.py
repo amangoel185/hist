@@ -303,6 +303,16 @@ class BaseHist(bh.Histogram, metaclass=MetaConstructor, family=hist):
 
         return tuple(self._loc_shortcut(v) for v in index)  # type: ignore[union-attr, union-attr, union-attr, union-attr]
 
+    def sum(self, flow: bool = False) -> float | bh.accumulators.Accumulator | Any:
+        prod = 1
+        for axes in self.axes:
+            if type(axes) in [hist.axis.StrCategory, hist.axis.IntCategory]:
+                prod = prod * len(axes)
+        if prod == 0:
+            return self._hist.sum(flow=True)
+        else:
+            return self._hist.sum(flow)
+
     def __getitem__(  # type: ignore[override]
         self: T, index: IndexingExpr
     ) -> T | float | bh.accumulators.Accumulator:
